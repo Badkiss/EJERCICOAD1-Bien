@@ -2,15 +2,9 @@ import Controlador.FormateoArchivos2;
 import Controlador.TramitacionArchivos2;
 import Model.Caso;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -47,9 +41,12 @@ public class Main2 {
             for (Path path:directoryStream){
                 meses.add(path.toString());
             }
-            try (){
-
+            for (String strig:meses){
+                try (BufferedReader br= Files.newBufferedReader(Paths.get(strig),Charset.forName("UTF-8"))){
+                        br.lines().forEach(s -> System.out.println(s));
+                }
             }
+
         }catch (IOException e){
             e.printStackTrace();
         }

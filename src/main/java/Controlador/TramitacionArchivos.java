@@ -18,10 +18,11 @@ public class TramitacionArchivos {
         return peliculas.stream().collect(Collectors.groupingBy(n->n.getFechaDeEstreno().getMonth(),Collectors.counting()));
     }
     public static void peliculaConMayorRecaudacionMenosCines(List<Pelicula>peliculas){
-        peliculas.stream().filter(p->p.getEspectadores()==0).filter(p->p.getEspectadores() == peliculas.stream().min(Comparator.comparing(Pelicula::getEspectadores))
-                .get().getEspectadores())
-                .filter(p-> p.getTotalGanado()==peliculas.stream().filter(s->s.getEspectadores()==0).filter(s->s.getEspectadores() == peliculas.stream().min(Comparator.comparing(Pelicula::getEspectadores))
-                .get().getEspectadores()).max(Comparator.comparing(Pelicula::getTotalGanado)).get().getTotalGanado()).forEach(p-> System.out.println(p));
+        peliculas.stream().filter(p->p.getEspectadores()!=0)
+                .filter(p->p.getEspectadores() == peliculas.stream().filter(x->x.getEspectadores()!=0).min(Comparator.comparing(Pelicula::getEspectadores)).get().getEspectadores())
+                .filter(p-> p.getTotalGanado()==peliculas.stream().filter(s->s.getEspectadores() !=0)
+                        .filter(s->s.getEspectadores() == peliculas.stream()
+                                .filter(d->d.getEspectadores()!=0).min(Comparator.comparing(Pelicula::getEspectadores)).get().getEspectadores()).max(Comparator.comparing(Pelicula::getTotalGanado)).get().getTotalGanado()).forEach(p-> System.out.println(p));
 
     }
     public static Map<String,Long> numeroPeliculasPorDistribuidoras(List<Pelicula>peliculas){
